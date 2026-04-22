@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API = "https://student-auth-backend-hqzy.onrender.com/api";
+const API = process.env.REACT_APP_API;
+
 export default function Dashboard() {
   const [user, setUser] = useState({});
   const [course, setCourse] = useState("");
@@ -20,36 +21,29 @@ export default function Dashboard() {
     .then(res => setUser(res.data))
     .catch(() => navigate("/login"));
 
-  }, [token, navigate]); // ✅ important fix
+  }, [token, navigate]);
 
   const updateCourse = async () => {
     if (!course) return alert("Enter course");
 
-    try {
-      await axios.put(API + "/update-course",
-        { course },
-        { headers: { Authorization: "Bearer " + token } }
-      );
-      alert("Course updated");
-    } catch (err) {
-      alert(err.response?.data?.msg || "Error");
-    }
+    await axios.put(API + "/update-course",
+      { course },
+      { headers: { Authorization: "Bearer " + token } }
+    );
+
+    alert("Course updated");
   };
 
   const updatePassword = async () => {
-    if (!pass.oldPassword || !pass.newPassword) {
+    if (!pass.oldPassword || !pass.newPassword)
       return alert("Enter both passwords");
-    }
 
-    try {
-      await axios.put(API + "/update-password",
-        pass,
-        { headers: { Authorization: "Bearer " + token } }
-      );
-      alert("Password updated");
-    } catch (err) {
-      alert(err.response?.data?.msg || "Error");
-    }
+    await axios.put(API + "/update-password",
+      pass,
+      { headers: { Authorization: "Bearer " + token } }
+    );
+
+    alert("Password updated");
   };
 
   const logout = () => {
@@ -66,42 +60,22 @@ export default function Dashboard() {
       <p>Course: {user.course}</p>
 
       <h4>Update Course</h4>
-      <input
-        className="form-control my-2"
-        placeholder="New Course"
-        onChange={(e) => setCourse(e.target.value)}
-      />
-      <button className="btn btn-warning" onClick={updateCourse}>
-        Update Course
-      </button>
+      <input className="form-control my-2" onChange={(e)=>setCourse(e.target.value)} />
+      <button className="btn btn-warning" onClick={updateCourse}>Update</button>
 
       <h4 className="mt-4">Update Password</h4>
-      <input
-        type="password"
-        className="form-control my-2"
+      <input type="password" className="form-control my-2"
         placeholder="Old Password"
-        onChange={(e) =>
-          setPass({ ...pass, oldPassword: e.target.value })
-        }
-      />
-      <input
-        type="password"
-        className="form-control my-2"
-        placeholder="New Password"
-        onChange={(e) =>
-          setPass({ ...pass, newPassword: e.target.value })
-        }
-      />
+        onChange={(e)=>setPass({...pass, oldPassword:e.target.value})} />
 
-      <button className="btn btn-danger" onClick={updatePassword}>
-        Update Password
-      </button>
+      <input type="password" className="form-control my-2"
+        placeholder="New Password"
+        onChange={(e)=>setPass({...pass, newPassword:e.target.value})} />
+
+      <button className="btn btn-danger" onClick={updatePassword}>Update</button>
 
       <br /><br />
-
-      <button className="btn btn-dark" onClick={logout}>
-        Logout
-      </button>
+      <button className="btn btn-dark" onClick={logout}>Logout</button>
     </div>
   );
 }
