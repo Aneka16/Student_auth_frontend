@@ -1,0 +1,39 @@
+/* Page background */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+/* Center container */
+.container {
+  max-width: 400px;
+  margin: 80px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Heading */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+  border-radius: 6px !important;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 6px !important;
+}
+
+/* Dashboard spacing */
+h4 {
+  margin-top: 20px;
+}
