@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API = "https://student-auth-backend-hqzy.onrender.com";
+const API = "https://student-auth-backend-hqzy.onrender.com/api";
 
 export default function Login() {
   const [data, setData] = useState({ email: "", password: "" });
